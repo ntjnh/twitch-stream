@@ -1,4 +1,4 @@
-const channels = ["ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp", "storbeck", "habathcx", "RobotCaleb", "noobs2ninjas"];
+const channels = ["tinkerleo", "ESL_SC2", "shroud", "OgamingSC2", "cretetion", "syndicate",  "freecodecamp", "kevinho90", "habathcx", "RobotCaleb", "castro_1021", "lirik", "tsm_dyrus", "riotgames"];
 
 channels.forEach(function(channel) {
 
