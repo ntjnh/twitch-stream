@@ -1,116 +1,146 @@
-const channels = ["tinkerleo", "ESL_SC2", "shroud", "OgamingSC2", "cretetion", "syndicate",  "freecodecamp", "kevinho90", "habathcx", "RobotCaleb", "castro_1021", "lirik", "tsm_dyrus", "riotgames"];
+const channels = ["ESL_SC2", "shroud", "OgamingSC2", "cretetion", "syndicate",  "freecodecamp", "shlorox", "habathcx", "RobotCaleb", "elajjaz", "lirik", "tsm_dyrus", "riotgames", "silvername"];
 
-channels.forEach(function(channel) {
-
-  //Create user cards
-  const $card = $("<div></div>", {"class": "channel-card col-xs-6 col-sm-4 col-md-3"});
-  const $pic = $("<img>", {"class": "img-responsive"});
-  $card.append($pic);
-
-  const $name = $("<h3>");
-  const $link = $("<a>", {href: "https://www.twitch.tv/" + channel, target: "_blank"});
-  const $statusIcon = $("<i>", {"class": "fa fa-circle-o"});
-  $link.text(channel);
-  $name.append($link);
-  $name.append($statusIcon);
-
-  $card.append($name);
-
-  const $status = $("<p>", {"class": "text-muted status"});
-
-  $(".channels").append($card);
-
-  //get stream data from api
-  const apiStream = "https://wind-bow.glitch.me/twitch-api/streams/" + channel;
-  $.ajax(apiStream, {
-    dataType: "JSON",
-    data: {
-      origin: "*"
-    },
-    type: "GET",
-    success: data => {
-
-      // if user is offline
-      if (data.stream === null) {
-        $status.html("<em>Offline</em>");
-        $card.append($status);
-        $card.addClass("offline");
-        // get images for all + user data for offline channels
-        const apiUser = "https://wind-bow.glitch.me/twitch-api/users/" + channel;
-        $.ajax(apiUser, {
-          dataType: "JSON",
-          data: {
-            origin: "*"
-          },
-          type: "GET",
-          success: user => {
-            if (user.logo) {
-              $pic.attr("src", user.logo);
-            } else {
-              //if no image is available, use dummy image
-              $pic.attr("src", "https://bit.ly/2w9qEyu");
-            }
-          }
-        }); // end ajax (user info)
-      } else if (data.stream === undefined) {
-        $status.html("<em>Channel not found.</em>");
-        $card.append($status);
-      } else {
-        const game = data.stream.game;
-        const status = data.stream.channel.status;
-
-        $pic.attr("src", data.stream.channel.logo);
-        $status.html(snipStatus(status)).attr("title", status);
-        $card.append($status);
-        $card.addClass("online");
-        $status.removeClass("text-muted");
-        $status.addClass("text-success");
-        $statusIcon.removeClass("fa-circle-o");
-        $statusIcon.addClass("fa-circle");
+// Loop through the channels
+channels.forEach(channel => {
+  // Create user cards
+  const card = document.createElement("div");
+  card.classList.add("channel-card", "col-xs-6", "col-sm-4", "col-md-3");
+  const pic = document.createElement("img");
+  pic.classList.add("img-responsive");
+  card.appendChild(pic);
+  
+  const name = document.createElement("h3");
+  const link = document.createElement("a");
+  link.setAttribute("href", "https://www.twitch.tv/" + channel);
+  link.setAttribute("target", "_blank");
+  const statusIcon = document.createElement("i");
+  statusIcon.classList.add("fa", "fa-circle-o");
+  link.textContent = channel;
+  name.appendChild(link);
+  name.appendChild(statusIcon);
+  
+  card.appendChild(name);
+  
+  const channelStatus = document.createElement("p");
+  channelStatus.classList.add("text-muted", "status");
+  
+  const channelsDiv = document.querySelector(".channels");
+  channelsDiv.appendChild(card);
+  
+  // Get stream data from API
+  const clientID = "ecek1qkikyqi8smqzpazytcjgok63h";
+  const streamDataUrl = "https://api.twitch.tv/kraken/streams/" + channel + "?client_id=" + clientID;
+  
+  const streamData = new XMLHttpRequest();
+  streamData.onreadystatechange = function() {
+    if (streamData.readyState === 4) {
+      if (streamData.status === 200) {
+        const data = JSON.parse(streamData.responseText);
+        
+        // If channel is offline
+        if (data.stream === null) {
+          channelStatus.innerHTML = "<em>Offline</em>";
+          card.appendChild(channelStatus);
+          card.classList.add("offline");
+          
+          // Get images and channel data
+          const offlineStreamUrl = "https://api.twitch.tv/kraken/users/" + channel + "?client_id=" + clientID;
+          const offlineStreamData = new XMLHttpRequest();
+          offlineStreamData.onreadystatechange = function() {
+            if(offlineStreamData.readyState === 4) {
+              if(offlineStreamData.status === 200) {
+                const user = JSON.parse(offlineStreamData.responseText);
+                
+                if(user.logo) {
+                  pic.setAttribute("src", user.logo);
+                } else {
+                  // If no logo, use dummy image
+                  pic.setAttribute("src", "https://bit.ly/2w9qEyu");
+                }
+              } // End status if
+            } // End readyState if
+          };
+          offlineStreamData.open("GET", offlineStreamUrl);
+          offlineStreamData.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+          offlineStreamData.setRequestHeader("Client-ID", clientID);
+          offlineStreamData.send();
+        // If channel is not found
+        } else if(data.stream === undefined) {
+          channelStatus.innerHTML = "<em>Channel not found.</em>";
+          card.appendChild(channelStatus);
+        // Otherwise if online, display stream information
+        } else {
+          const game = data.stream.game;
+          const status = data.stream.channel.status;
+          
+          pic.setAttribute("src", data.stream.channel.logo);
+          channelStatus.innerHTML = snipStatus(status);
+          channelStatus.setAttribute("title", status);
+          card.appendChild(channelStatus);
+          card.classList.add("online");
+          channelStatus.classList.remove("text-muted");
+          channelStatus.classList.add("text-success");
+          statusIcon.classList.remove("fa-circle-o");
+          statusIcon.classList.add("fa-circle");
+        }
       }
     }
-  }); // end ajax (stream)
-}); // end loop
+  }; // End ajax callback
+  streamData.open("GET", streamDataUrl);
+  streamData.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+  streamData.setRequestHeader("Client-ID", clientID);
+  streamData.send();
+}); // End channel loop
 
 filter();
 
-
 // Filter
 function filter() {
-  const $showAll = $("#showAll");
-  const $showOnline = $("#showOnline");
-  const $showOffline = $("#showOffline");
-
-  $showAll.on("click", () => {
-    $showAll.attr("disabled", "disabled");
-    $showOnline.removeAttr("disabled");
-    $showOffline.removeAttr("disabled");
-    $(".offline, .online").show();
+  const showAll = document.getElementById("showAll");
+  const showOnline = document.getElementById("showOnline");
+  const showOffline = document.getElementById("showOffline");
+  
+  showAll.addEventListener("click", () => {
+    showAll.setAttribute("disabled", "disabled");
+    showOnline.removeAttribute("disabled");
+    showOffline.removeAttribute("disabled");
+    const all = document.querySelectorAll(".offline, .online");
+    for (const streamer of all) {
+      streamer.style.display = "block";
+    }
   });
-
-  $showOnline.on("click", () => {
-    $showAll.removeAttr("disabled");
-    $showOffline.removeAttr("disabled");
-    $showOnline.attr("disabled", "disabled");
-    $(".online").show();
-    $(".offline").hide();
+  
+  showOnline.addEventListener("click", () => {
+    showAll.removeAttribute("disabled");
+    showOffline.removeAttribute("disabled");
+    showOnline.setAttribute("disabled", "disabled");
+    const online = document.querySelectorAll(".online");
+    const offline = document.querySelectorAll(".offline");
+    for (const onlineStreamer of online) {
+      onlineStreamer.style.display = "block";
+    }
+    for (const offlineStreamer of offline) {
+      offlineStreamer.style.display = "none";
+    }
   });
-
-  $showOffline.on("click", () => {
-    $showAll.removeAttr("disabled");
-    $showOnline.removeAttr("disabled");
-    $showOffline.attr("disabled", "disabled");
-    $(".offline").show();
-    $(".online").hide();
+  
+  showOffline.addEventListener("click", () => {
+    showAll.removeAttribute("disabled");
+    showOnline.removeAttribute("disabled");
+    showOffline.setAttribute("disabled", "disabled");
+    const online = document.querySelectorAll(".online");
+    const offline = document.querySelectorAll(".offline");
+    for (const offlineStreamer of offline) {
+      offlineStreamer.style.display = "block";
+    }
+    for (const onlineStreamer of online) {
+      onlineStreamer.style.display = "none";
+    }
   });
 }
 
-// status shortening function
+// Status clipping function
 function snipStatus(status) {
-    if (status.length > 30) {
-        return (status.substring(0, 30) + "...");
-    }
-    else {
-        return status;
-    }
+  if (status.length > 30) return (status.substring(0, 30) + "...");
+  else return status;
 }

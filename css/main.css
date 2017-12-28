@@ -2,19 +2,15 @@ body {
   font-family: 'Montserrat', sans-serif;
 }
 
-a,
-a:visited {
+a, a:visited {
   color: #0083ff;
 }
 
-a:hover,
-a:focus,
-a:visited {
+a:hover, a:focus, a:visited {
   text-decoration: none;
 }
 
-a:hover,
-a:focus {
+a:hover, a:focus {
   color: #0069cc;
 }
 
@@ -29,34 +25,28 @@ a:focus {
   text-align: center;
 }
 
-/* filter */
 #filter {
   margin-bottom: 15px;
   text-align: right;
 }
 
-.all-button,
-.all-button:hover {
+.all-button, .all-button:hover {
   background-color: #0083ff;
   color: #fff;
 }
 
-.online-button,
-.online-button:hover {
+.online-button, .online-button:hover {
   background-color: green;
   color: #fff;
 }
 
-.offline-button,
-.offline-button:hover {
+.offline-button, .offline-button:hover {
   background-color: #cf2727;
   color: #fff;
 }
 
-/* cards */
 .card {
   margin-bottom: 20px;
-
 }
 
 .fa-circle, .fa-circle-o {
