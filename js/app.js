@@ -29,8 +29,8 @@ channels.forEach(channel => {
   
   // Get stream data from API
   const clientID = "ecek1qkikyqi8smqzpazytcjgok63h";
-  const streamDataUrl = "https://api.twitch.tv/kraken/streams/" + channel + "?client_id=" + clientID;
-  
+  const streamDataUrl = "https://api.twitch.tv/helix/streams?user_login=" + channel;
+
   const streamData = new XMLHttpRequest();
   streamData.onreadystatechange = function() {
     if (streamData.readyState === 4) {
@@ -44,7 +44,7 @@ channels.forEach(channel => {
           card.classList.add("offline");
           
           // Get images and channel data
-          const offlineStreamUrl = "https://api.twitch.tv/kraken/users/" + channel + "?client_id=" + clientID;
+          const offlineStreamUrl = "https://api.twitch.tv/helix/users?login=" + channel;
           const offlineStreamData = new XMLHttpRequest();
           offlineStreamData.onreadystatechange = function() {
             if(offlineStreamData.readyState === 4) {
