@@ -21,7 +21,7 @@ channels.forEach(channel => {
   
   card.appendChild(name);
   
-  const channelStatus = document.createElement("p");
+  const channelStatus = document.createElement("p"); // TODO: Change this variable -- status not really suitablee
   channelStatus.classList.add("text-muted", "status");
   
   const channelsDiv = document.querySelector(".channels");
@@ -45,7 +45,7 @@ channels.forEach(channel => {
             if(offlineStreamData.status === 200) {
               const user = JSON.parse(offlineStreamData.responseText);
               
-              if (user.data[0]) {
+              if (user.data[0]) { // TODO: Make another variable or something -- I hate this
                 if(user.data[0].profile_image_url) {
                   pic.setAttribute("src", user.data[0].profile_image_url);
                 } else {
@@ -54,7 +54,7 @@ channels.forEach(channel => {
                 }
               } else {
                 // If channel is not found
-                  channelStatus.innerHTML = "<em>Channel not found.</em>";
+                  channelStatus.innerHTML = "<em>Channel not found.</em>"; // TODO: Make this text red
                   card.appendChild(channelStatus);
                   pic.setAttribute("src", "generic.jpg");
               }
@@ -126,6 +126,7 @@ function filter() {
     }
   });
   
+  // TODO: Channels that are "not found" shouldn't appear with the offline channels!
   showOffline.addEventListener("click", () => {
     showAll.removeAttribute("disabled");
     showOnline.removeAttribute("disabled");
