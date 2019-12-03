@@ -50,13 +50,13 @@ channels.forEach(channel => {
                   pic.setAttribute("src", user.data[0].profile_image_url);
                 } else {
                   // If no logo, use dummy image
-                  pic.setAttribute("src", "https://bit.ly/2w9qEyu");
+                  pic.setAttribute("src", "generic.jpg");
                 }
               } else {
                 // If channel is not found
                   channelStatus.innerHTML = "<em>Channel not found.</em>";
                   card.appendChild(channelStatus);
-                  pic.setAttribute("src", "https://bit.ly/2w9qEyu");
+                  pic.setAttribute("src", "generic.jpg");
               }
             } // End status if
           } // End readyState if
