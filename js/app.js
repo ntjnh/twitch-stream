@@ -56,7 +56,7 @@ channels.forEach(channel => {
                 // If channel is not found
                   channelStatus.innerHTML = "<em>Channel not found.</em>";
                   card.appendChild(channelStatus);
-                // Otherwise if online, display stream information
+                  pic.setAttribute("src", "https://bit.ly/2w9qEyu");
               }
             } // End status if
           } // End readyState if
