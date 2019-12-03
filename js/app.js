@@ -1,4 +1,4 @@
-const channels = ["ESL_SC2", "shroud", "OgamingSC2", "cretetion", "syndicate",  "freecodecamp", "shlorox", "habathcx", "RobotCaleb", "elajjaz", "lirik", "tsm_dyrus", "riotgames", "silvername"];
+const channels = ["shroud", "OgamingSC2", "cretetion", "syndicate",  "ninja", "shlorox", "habathcx", "RobotCaleb", "elajjaz", "lirik", "tsm_dyrus", "riotgames", "silvername", "zryiedrokmijn"];
 
 // Loop through the channels
 channels.forEach(channel => {
@@ -36,46 +36,48 @@ channels.forEach(channel => {
     if (streamData.readyState === 4) {
       if (streamData.status === 200) {
         const data = JSON.parse(streamData.responseText);
-        
-        // If channel is offline
-        if (data.stream === null) {
-          channelStatus.innerHTML = "<em>Offline</em>";
-          card.appendChild(channelStatus);
-          card.classList.add("offline");
-          
-          // Get images and channel data
-          const offlineStreamUrl = "https://api.twitch.tv/helix/users?login=" + channel;
-          const offlineStreamData = new XMLHttpRequest();
-          offlineStreamData.onreadystatechange = function() {
-            if(offlineStreamData.readyState === 4) {
-              if(offlineStreamData.status === 200) {
-                const user = JSON.parse(offlineStreamData.responseText);
-                
-                if(user.logo) {
-                  pic.setAttribute("src", user.logo);
+
+        // Get images and channel data
+        const offlineStreamUrl = "https://api.twitch.tv/helix/users?login=" + channel;
+        const offlineStreamData = new XMLHttpRequest();
+        offlineStreamData.onreadystatechange = function() {
+          if(offlineStreamData.readyState === 4) {
+            if(offlineStreamData.status === 200) {
+              const user = JSON.parse(offlineStreamData.responseText);
+              
+              if (user.data[0]) {
+                if(user.data[0].profile_image_url) {
+                  pic.setAttribute("src", user.data[0].profile_image_url);
                 } else {
                   // If no logo, use dummy image
                   pic.setAttribute("src", "https://bit.ly/2w9qEyu");
                 }
-              } // End status if
-            } // End readyState if
-          };
-          offlineStreamData.open("GET", offlineStreamUrl);
-          offlineStreamData.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
-          offlineStreamData.setRequestHeader("Client-ID", clientID);
-          offlineStreamData.send();
-        // If channel is not found
-        } else if(data.stream === undefined) {
-          channelStatus.innerHTML = "<em>Channel not found.</em>";
+              } else {
+                // If channel is not found
+                  channelStatus.innerHTML = "<em>Channel not found.</em>";
+                  card.appendChild(channelStatus);
+                // Otherwise if online, display stream information
+              }
+            } // End status if
+          } // End readyState if
+        };
+        offlineStreamData.open("GET", offlineStreamUrl);
+        offlineStreamData.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+        offlineStreamData.setRequestHeader("Client-ID", clientID);
+        offlineStreamData.send();
+        
+        // If channel is offline
+        if (data.data[0] === undefined) {
+          channelStatus.innerHTML = "<em>Offline</em>";
           card.appendChild(channelStatus);
-        // Otherwise if online, display stream information
-        } else {
-          const game = data.stream.game;
-          const status = data.stream.channel.status;
+          card.classList.add("offline");
           
-          pic.setAttribute("src", data.stream.channel.logo);
-          channelStatus.innerHTML = snipStatus(status);
-          channelStatus.setAttribute("title", status);
+        // Else if channel is currently streaming
+        } else if (data.data[0].type == "live") {
+          // const game = data.stream.game;
+          const viewers = data.data[0].viewer_count;
+
+          channelStatus.innerHTML = `${viewers} viewers`;
           card.appendChild(channelStatus);
           card.classList.add("online");
           channelStatus.classList.remove("text-muted");
