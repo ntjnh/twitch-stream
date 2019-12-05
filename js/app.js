@@ -1,4 +1,4 @@
-const channels = ["shroud", "OgamingSC2", "cretetion", "syndicate",  "ninja", "shlorox", "habathcx", "RobotCaleb", "elajjaz", "lirik", "tsm_dyrus", "riotgames", "silvername", "zryiedrokmijn"];
+const channels = ["shroud", "OgamingSC2", "cretetion", "syndicate",  "ninja", "shlorox", "amaz", "RobotCaleb", "elajjaz", "lirik", "tsm_dyrus", "riotgames", "silvername", "zryiedrokmijn"];
 
 // Loop through the channels
 channels.forEach(channel => {
