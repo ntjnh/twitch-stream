@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/ntjnh/twitch-stream/issues"
   },
-  "homepage": "https://github.com/ntjnh/twitch-stream#readme"
+  "homepage": "https://github.com/ntjnh/twitch-stream#readme",
+  "devDependencies": {
+    "gulp": "^4.0.2"
+  }
 }
