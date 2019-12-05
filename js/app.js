@@ -1,4 +1,4 @@
-const channels = ["shroud", "OgamingSC2", "cretetion", "syndicate",  "ninja", "shlorox", "amaz", "RobotCaleb", "elajjaz", "lirik", "tsm_dyrus", "riotgames", "silvername", "zryiedrokmijn"];
+const channels = ["shroud", "OgamingSC2", "cretetion", "syndicate",  "ninja", "shlorox", "zryiedrokmijn", "amaz", "RobotCaleb", "elajjaz", "lirik", "tsm_dyrus", "riotgames", "silvername"];
 
 // Loop through the channels
 channels.forEach(channel => {
@@ -54,6 +54,7 @@ channels.forEach(channel => {
                                 }
                             } else {
                                 // If channel is not found
+                                // TODO: Needs to have not-found class instead of offline
                                 channelStatus.innerHTML = "<em>Channel not found.</em>"; // TODO: Make this text red
                                 card.appendChild(channelStatus);
                                 pic.setAttribute("src", "generic.jpg");
