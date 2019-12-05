@@ -21,7 +21,7 @@ channels.forEach(channel => {
 
     card.appendChild(name);
 
-    const channelStatus = document.createElement("p"); // TODO: Change this variable -- status not really suitablee
+    const channelStatus = document.createElement("p");
     channelStatus.classList.add("text-muted", "status");
 
     const channelsDiv = document.querySelector(".channels");
@@ -45,7 +45,7 @@ channels.forEach(channel => {
                         if(offlineStreamData.status === 200) {
                             const user = JSON.parse(offlineStreamData.responseText);
 
-                            if (user.data[0]) { // TODO: Make another variable or something -- I hate this
+                            if (user.data[0]) {
                                 if(user.data[0].profile_image_url) {
                                     pic.setAttribute("src", user.data[0].profile_image_url);
                                 } else {
@@ -54,8 +54,7 @@ channels.forEach(channel => {
                                 }
                             } else {
                                 // If channel is not found
-                                // TODO: Needs to have not-found class instead of offline
-                                channelStatus.innerHTML = "<em>Channel not found.</em>"; // TODO: Make this text red
+                                channelStatus.innerHTML = "<em>Channel not found.</em>";
                                 card.appendChild(channelStatus);
                                 pic.setAttribute("src", "generic.jpg");
                             }
@@ -127,7 +126,6 @@ function filter() {
         }
     });
 
-    // TODO: Channels that are "not found" shouldn't appear with the offline channels!
     showOffline.addEventListener("click", () => {
         showAll.removeAttribute("disabled");
         showOnline.removeAttribute("disabled");
@@ -142,3 +140,11 @@ function filter() {
         }
     });
 }
+
+/******** Thoughts/todo *********
+- isLive variable set to true or false or null when checking streams to find out if online, offline or not found
+- Make new variables for user.data[0] and data.data[0]
+- The status para for non-existent streams needs to have not-found class instead of offline
+    - Non-existent streams shouldn't appear with the offline channels!
+- Make the "channel not found" text red (text-danger class)
+*/
