@@ -1,0 +1,19 @@
+{
+  "name": "twitch-stream",
+  "version": "1.0.0",
+  "description": "A simple Twitch stream display page. From the group of channels displayed, see you who is online and who is offline.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ntjnh/twitch-stream.git"
+  },
+  "author": "Nate Jonah <nate@natejonah.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ntjnh/twitch-stream/issues"
+  },
+  "homepage": "https://github.com/ntjnh/twitch-stream#readme"
+}
