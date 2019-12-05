@@ -142,9 +142,3 @@ function filter() {
         }
     });
 }
-
-// Status clipping function -- TODO: Probably don't need this function anymore
-function snipStatus(status) {
-    if (status.length > 30) return (status.substring(0, 30) + "...");
-    else return status;
-}
