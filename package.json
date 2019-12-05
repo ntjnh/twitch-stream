@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/ntjnh/twitch-stream#readme",
   "devDependencies": {
-    "gulp": "^4.0.2"
+    "gulp": "^4.0.2",
+    "gulp-terser": "^1.2.0"
   }
 }
