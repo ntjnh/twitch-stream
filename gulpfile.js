@@ -15,7 +15,7 @@ const js = () => {
 };
 
 const scss = () => {
-    return src("css/**/*.scss")
+    return src(["!_.scss", "css/**/*.scss"])
         .pipe(sass().on("error", sass.logError))
         .pipe(cleanCSS())
         .pipe(dest("build/css"));
