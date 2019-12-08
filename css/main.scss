@@ -5,23 +5,26 @@ body {
     font-family: $font;
 }
 
-a, a:visited {
-    color: $blue;
-}
+a {
+    &,
+    &:focus,
+    &:hover,
+    &:visited {
+        color: $blue;
+    }
 
-a:hover, a:focus, a:visited {
-    text-decoration: none;
-}
-
-a:hover, a:focus {
-    color: $blue;
+    &:focus,
+    &:hover,
+    &:visited {
+        text-decoration: none;
+    }
 }
 
 .jumbotron {
     background-color:$blue;
     background-image: url(https://c1.staticflickr.com/3/2883/11044278476_30b114e38e_b.jpg);
-    background-size: cover;
     background-position: 50% 40%;
+    background-size: cover;
     color: $white;
     text-shadow: 2px 1px 5px $black;
     text-align: center;
@@ -32,36 +35,42 @@ a:hover, a:focus {
     text-align: right;
 }
 
-.all-button, .all-button:hover {
-    background-color: $blue;
-    color: $white;
+.all-button {
+    &, &:hover {
+        background-color: $blue;
+        color: $white;
+    }
 }
 
-.online-button, .online-button:hover {
-    background-color: $green;
-    color: $white;
+.online-button {
+    &, &:hover {
+        background-color: $green;
+        color: $white;
+    }
 }
 
-.offline-button, .offline-button:hover {
-    background-color: $red;
-    color: $white;
+.offline-button {
+    &, &:hover {
+        background-color: $red;
+        color: $white;
+    }
 }
 
 .card {
     margin-bottom: 20px;
 }
 
-.fa-circle, .fa-circle-o {
-    font-size: 14px;
-    vertical-align: top;
-}
-
 .fa-circle {
     color: $green-2;
-}
 
-.fa-circle-o {
-    color: $grey;
+    &, &-o {
+        font-size: 14px;
+        vertical-align: top;
+    }
+
+    &-o {
+        color: $grey;
+    }
 }
 
 .status {
