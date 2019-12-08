@@ -67,4 +67,16 @@ a:hover, a:focus {
 
 .status {
   height: 60px;
+  
+  &--null {
+    color: #dc3545;
+  }
+
+  &--offline {
+    color: #777;
+  }
+  
+  &--online {
+    color: #3c763d;
+  }
 }
