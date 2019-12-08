@@ -4,12 +4,13 @@ const channels = ["shroud", "OgamingSC2", "cretetion", "syndicate",  "ninja", "s
 channels.forEach(channel => {
     // Create user cards
     const card = document.createElement("div");
-    card.classList.add("channel-card", "col-xs-6", "col-sm-4", "col-md-3");
+    card.classList.add("channel-card", "col-6", "col-sm-4", "col-md-3");
     const pic = document.createElement("img");
-    pic.classList.add("img-responsive");
+    pic.classList.add("img-fluid");
     card.appendChild(pic);
 
     const name = document.createElement("h3");
+    name.classList.add("lead", "mt-3");
     const link = document.createElement("a");
     link.setAttribute("href", "https://www.twitch.tv/" + channel);
     link.setAttribute("target", "_blank");
@@ -22,7 +23,7 @@ channels.forEach(channel => {
     card.appendChild(name);
 
     const channelStatus = document.createElement("p");
-    channelStatus.classList.add("text-muted", "status");
+    channelStatus.classList.add("status", "status--offline");
 
     const channelsDiv = document.querySelector(".channels");
     channelsDiv.appendChild(card);
@@ -80,7 +81,7 @@ channels.forEach(channel => {
                     card.appendChild(channelStatus);
                     card.classList.add("online");
                     channelStatus.classList.remove("text-muted");
-                    channelStatus.classList.add("text-success");
+                    channelStatus.classList.add("status--offline");
                     statusIcon.classList.remove("fa-circle-o");
                     statusIcon.classList.add("fa-circle");
                 }
@@ -147,4 +148,5 @@ function filter() {
 - The status para for non-existent streams needs to have not-found class instead of offline
     - Non-existent streams shouldn't appear with the offline channels!
 - Make the "channel not found" text red (text-danger class)
+- Online css class doesn't work
 */
