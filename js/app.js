@@ -2,31 +2,7 @@ const channels = ["shroud", "OgamingSC2", "cretetion", "syndicate",  "ninja", "s
 
 // Loop through the channels
 channels.forEach(channel => {
-    // Create user cards
-    const card = document.createElement("div");
-    card.classList.add("channel-card", "col-6", "col-sm-4", "col-md-3");
-    const pic = document.createElement("img");
-    pic.classList.add("img-fluid");
-    card.appendChild(pic);
-
-    const name = document.createElement("h3");
-    name.classList.add("lead", "mt-3");
-    const link = document.createElement("a");
-    link.setAttribute("href", "https://www.twitch.tv/" + channel);
-    link.setAttribute("target", "_blank");
-    const statusIcon = document.createElement("i");
-    statusIcon.classList.add("fa", "fa-circle-o");
-    link.textContent = channel;
-    name.appendChild(link);
-    name.appendChild(statusIcon);
-
-    card.appendChild(name);
-
-    const channelStatus = document.createElement("p");
-    channelStatus.classList.add("status", "status--offline");
-
-    const channelsDiv = document.querySelector(".channels");
-    channelsDiv.appendChild(card);
+    createCard(channel);
 
     // Get stream data from API
     const clientID = "ecek1qkikyqi8smqzpazytcjgok63h";
@@ -96,6 +72,33 @@ channels.forEach(channel => {
 }); // End channel loop
 
 filter();
+
+// Create card
+function createCard(stream) {
+    const card = document.createElement("div");
+    const pic = document.createElement("img");
+    const name = document.createElement("h3");
+    const link = document.createElement("a");
+    const statusIcon = document.createElement("i");
+    const channelStatus = document.createElement("p");
+    const channelsDiv = document.querySelector(".channels");
+
+    card.classList.add("channel-card", "col-6", "col-sm-4", "col-md-3");
+    pic.classList.add("img-fluid");
+    name.classList.add("lead", "mt-3");
+    statusIcon.classList.add("fa", "fa-circle-o");
+    channelStatus.classList.add("status", "status--offline");
+
+    link.setAttribute("href", "https://www.twitch.tv/" + stream);
+    link.setAttribute("target", "_blank");
+    link.textContent = stream;
+
+    card.appendChild(pic);
+    name.appendChild(link);
+    name.appendChild(statusIcon);
+    card.appendChild(name);
+    channelsDiv.appendChild(card);
+}
 
 // Filter
 function filter() {
