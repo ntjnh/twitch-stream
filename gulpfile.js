@@ -1,4 +1,4 @@
-const { dest, series, src } = require("gulp");
+const { dest, parallel, series, src, watch } = require("gulp");
 const terser = require("gulp-terser");
 const rename = require("gulp-rename");
 const sass = require("gulp-sass");
@@ -21,8 +21,11 @@ const scss = () => {
         .pipe(dest("build/css"));
 };
 
+const watchAll = () => watch(["css/**/*.scss", "js/**/*.js"], parallel(scss, js));
+
 module.exports = {
     default: series(scss, js),
     js: js,
-    scss: scss
+    scss: scss,
+    watch: watchAll
 };
