@@ -13,6 +13,7 @@ channels.forEach(channel => {
         if (streamData.readyState === 4) {
             if (streamData.status === 200) {
                 const data = JSON.parse(streamData.responseText);
+                const streamData = data.data[0];
 
                 // Get images and channel data
                 const offlineStreamUrl = "https://api.twitch.tv/helix/users?login=" + channel;
@@ -21,10 +22,11 @@ channels.forEach(channel => {
                     if(offlineStreamData.readyState === 4) {
                         if(offlineStreamData.status === 200) {
                             const user = JSON.parse(offlineStreamData.responseText);
+                            const userData = user.data[0];
 
-                            if (user.data[0]) {
-                                if(user.data[0].profile_image_url) {
-                                    pic.setAttribute("src", user.data[0].profile_image_url);
+                            if (userData) {
+                                if(userData.profile_image_url) {
+                                    pic.setAttribute("src", userData.profile_image_url);
                                 } else {
                                     // If no logo, use dummy image
                                     pic.setAttribute("src", "generic.jpg");
@@ -44,14 +46,14 @@ channels.forEach(channel => {
                 offlineStreamData.send();
 
                 // If channel is offline
-                if (data.data[0] === undefined) {
+                if (streamData === undefined) {
                     channelStatus.innerHTML = "<em>Offline</em>";
                     card.appendChild(channelStatus);
                     card.classList.add("offline");
                 // Else if channel is currently streaming
-                } else if (data.data[0].type == "live") {
+                } else if (streamData.type == "live") {
                     // const game = data.stream.game;
-                    const viewers = data.data[0].viewer_count;
+                    const viewers = streamData.viewer_count;
 
                     channelStatus.innerHTML = `${viewers} viewers`;
                     card.appendChild(channelStatus);
@@ -147,7 +149,6 @@ function filter() {
 
 /******** Thoughts/todo *********
 - isLive variable set to true or false or null when checking streams to find out if online, offline or not found
-- Make new variables for user.data[0] and data.data[0]
 - The status para for non-existent streams needs to have not-found class instead of offline
     - Non-existent streams shouldn't appear with the offline channels!
 - Make the "channel not found" text red (text-danger class)
