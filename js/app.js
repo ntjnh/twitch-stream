@@ -6,7 +6,7 @@ channels.forEach(channel => {
 
     // Get stream data from API
     const clientID = "ecek1qkikyqi8smqzpazytcjgok63h";
-    const streamDataUrl = "https://api.twitch.tv/helix/streams?user_login=" + channel;
+    const streamDataUrl = getDataUrl(channel, true, false);
 
     const streamData = new XMLHttpRequest();
     streamData.onreadystatechange = function() {
@@ -16,7 +16,7 @@ channels.forEach(channel => {
                 const streamData = data.data[0];
 
                 // Get images and channel data
-                const offlineStreamUrl = "https://api.twitch.tv/helix/users?login=" + channel;
+                const offlineStreamUrl = getDataUrl(channel, false, true);
                 const offlineStreamData = new XMLHttpRequest();
                 offlineStreamData.onreadystatechange = function() {
                     if(offlineStreamData.readyState === 4) {
@@ -74,6 +74,18 @@ channels.forEach(channel => {
 }); // End channel loop
 
 filter();
+
+function getDataUrl(channel, streamUrl = false, offlineUrl = false) {
+    let dataUrl;
+
+    if (streamUrl) {
+        dataUrl = `https://api.twitch.tv/helix/streams?user_login=${channel}`;
+    } else if (offlineUrl) {
+        dataUrl = `https://api.twitch.tv/helix/users?login=${channel}`;
+    }
+
+    return dataUrl;
+}
 
 // Create card
 function createCard(stream) {
