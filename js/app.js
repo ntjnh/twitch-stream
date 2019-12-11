@@ -1,117 +1,79 @@
-const channels = ["shroud", "OgamingSC2", "cretetion", "syndicate",  "ninja", "shlorox", "zryiedrokmijn", "amaz", "RobotCaleb", "elajjaz", "lirik", "tsm_dyrus", "riotgames", "silvername"];
+const users = ["shroud", "OgamingSC2", "cretetion", "syndicate",  "ninja", "shlorox", "zryiedrokmijn", "amaz", "RobotCaleb", "elajjaz", "lirik", "tsm_dyrus", "riotgames", "silvername"];
+const clientID = "ecek1qkikyqi8smqzpazytcjgok63h";
 
 // Loop through the channels
-channels.forEach(channel => {
-    createCard(channel);
+users.forEach((user, i) => {
+    createUserCard(user, i);
+});
 
-    // Get stream data from API
-    const clientID = "ecek1qkikyqi8smqzpazytcjgok63h";
-    const streamDataUrl = getDataUrl(channel, true, false);
 
-    const streamData = new XMLHttpRequest();
-    streamData.onreadystatechange = function() {
-        if (streamData.readyState === 4) {
-            if (streamData.status === 200) {
-                const data = JSON.parse(streamData.responseText);
-                const streamData = data.data[0];
+function getUserData(user) {
+    const dataUrl = `https://api.twitch.tv/helix/users?login=${user}`;
+    const userData = new XMLHttpRequest();
 
-                // Get images and channel data
-                const offlineStreamUrl = getDataUrl(channel, false, true);
-                const offlineStreamData = new XMLHttpRequest();
-                offlineStreamData.onreadystatechange = function() {
-                    if(offlineStreamData.readyState === 4) {
-                        if(offlineStreamData.status === 200) {
-                            const user = JSON.parse(offlineStreamData.responseText);
-                            const userData = user.data[0];
+    userData.onreadystatechange = function() {
+        if (userData.readyState === 4) {
+            if (userData.status === 200) {
+                const data = JSON.parse(userData.responseText);
+                const dataObj = data.data[0]; // I don't like this variable name
 
-                            if (userData) {
-                                if(userData.profile_image_url) {
-                                    pic.setAttribute("src", userData.profile_image_url);
-                                } else {
-                                    // If no logo, use dummy image
-                                    pic.setAttribute("src", "generic.jpg");
-                                }
-                            } else {
-                                // If channel is not found
-                                channelStatus.innerHTML = "<em>Channel not found.</em>";
-                                card.appendChild(channelStatus);
-                                pic.setAttribute("src", "generic.jpg");
-                            }
-                        } // End status if
-                    } // End readyState if
-                };
-                offlineStreamData.open("GET", offlineStreamUrl);
-                offlineStreamData.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
-                offlineStreamData.setRequestHeader("Client-ID", clientID);
-                offlineStreamData.send();
-
-                // If channel is offline
-                if (streamData === undefined) {
-                    channelStatus.innerHTML = "<em>Offline</em>";
-                    card.appendChild(channelStatus);
-                    card.classList.add("offline");
-                // Else if channel is currently streaming
-                } else if (streamData.type == "live") {
-                    // const game = data.stream.game;
-                    const viewers = streamData.viewer_count;
-
-                    channelStatus.innerHTML = `${viewers} viewers`;
-                    card.appendChild(channelStatus);
-                    card.classList.add("online");
-                    channelStatus.classList.remove("text-muted");
-                    channelStatus.classList.add("status--offline");
-                    statusIcon.classList.remove("fa-circle-o");
-                    statusIcon.classList.add("fa-circle");
+                // Check if the user exists
+                if (Boolean(dataObj)) { // If yes, collect data
+                    if (dataObj.profile_image_url) {
+                        // Image needs to be sent to user's card --> dataObj.profile_image_url
+                    }
+                } else { // Otherwise, return null
+                    // Image needs to be super generic but not the 404 "image not found" one, needs to be USER not found
                 }
             }
         }
-    }; // End ajax callback
+    };
 
-    streamData.open("GET", streamDataUrl);
-    streamData.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
-    streamData.setRequestHeader("Client-ID", clientID);
-    streamData.send();
-}); // End channel loop
+    userData.open("GET", dataUrl);
+    userData.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+    userData.setRequestHeader("Client-ID", clientID);
+    userData.send();
+}
+
 
 filter();
 
-function getDataUrl(channel, streamUrl = false, offlineUrl = false) {
-    let dataUrl;
+function createUserCard(user, i) {
+    const userUrl = `https://www.twitch.tv/${user}`;
 
-    if (streamUrl) {
-        dataUrl = `https://api.twitch.tv/helix/streams?user_login=${channel}`;
-    } else if (offlineUrl) {
-        dataUrl = `https://api.twitch.tv/helix/users?login=${channel}`;
-    }
-
-    return dataUrl;
-}
-
-// Create card
-function createCard(stream) {
     const card = document.createElement("div");
-    const pic = document.createElement("img");
-    const name = document.createElement("h3");
-    const link = document.createElement("a");
-    const statusIcon = document.createElement("i");
-    const channelStatus = document.createElement("p");
-    const channelsDiv = document.querySelector(".channels");
-
+    card.setAttribute("id", `user-${i}`);
     card.classList.add("channel-card", "col-6", "col-sm-4", "col-md-3");
+
+    const pic = document.createElement("img");
     pic.classList.add("img-fluid");
-    name.classList.add("lead", "mt-3");
-    statusIcon.classList.add("fa", "fa-circle-o");
-    channelStatus.classList.add("status", "status--offline");
-
-    link.setAttribute("href", "https://www.twitch.tv/" + stream);
-    link.setAttribute("target", "_blank");
-    link.textContent = stream;
-
+    pic.setAttribute("src", "404.jpg");
     card.appendChild(pic);
-    name.appendChild(link);
-    name.appendChild(statusIcon);
+
+    const name = document.createElement("h3");
+    name.classList.add("lead", "mt-3");
     card.appendChild(name);
+
+    const link = document.createElement("a");
+    link.setAttribute("href", userUrl);
+    link.setAttribute("target", "_blank");
+    link.textContent = user;
+    name.appendChild(link);
+
+    const channelsDiv = document.querySelector(".channels");
     channelsDiv.appendChild(card);
+
+    // const statusIcon = document.createElement("i");
+    // const channelStatus = document.createElement("p");
+
+    // statusIcon.classList.add("fa", "fa-circle-o");
+    // channelStatus.classList.add("status", "status--offline"); // 
+
+    // channelStatus.innerHTML = status; 
+    // card.classList.add(styleClass);
+
+    // name.appendChild(statusIcon);
+    // card.appendChild(channelStatus);
 }
 
 // Filter
@@ -158,11 +120,3 @@ function filter() {
         }
     });
 }
-
-/******** Thoughts/todo *********
-- isLive variable set to true or false or null when checking streams to find out if online, offline or not found
-- The status para for non-existent streams needs to have not-found class instead of offline
-    - Non-existent streams shouldn't appear with the offline channels!
-- Make the "channel not found" text red (text-danger class)
-- Online css class doesn't work
-*/
