@@ -60,8 +60,8 @@ function createUserCard(user, i) {
     link.textContent = user;
     name.appendChild(link);
 
-    const channelsDiv = document.querySelector(".channels");
-    channelsDiv.appendChild(card);
+    const streamsDiv = document.querySelector(".streams");
+    streamsDiv.appendChild(card);
 
     const statusIcon = document.createElement("i");
     statusIcon.classList.add("fa", "fa-circle-o");
