@@ -67,16 +67,10 @@ function createUserCard(user, i) {
     statusIcon.classList.add("fa", "fa-circle-o");
     name.appendChild(statusIcon);
 
-    // const channelStatus = document.createElement("p");
-
-    // statusIcon.classList.add("fa", "fa-circle-o");
-    // channelStatus.classList.add("status", "status--offline"); // 
-
-    // channelStatus.innerHTML = status; 
-    // card.classList.add(styleClass);
-
-    // name.appendChild(statusIcon);
-    // card.appendChild(channelStatus);
+    const streamStatus = document.createElement("p");
+    streamStatus.classList.add("status", "status--offline");
+    streamStatus.innerHTML = "<em>Offline</em>"; 
+    card.appendChild(streamStatus);
 }
 
 // Filter
