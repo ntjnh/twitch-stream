@@ -4,10 +4,11 @@ const clientID = "ecek1qkikyqi8smqzpazytcjgok63h";
 // Loop through the channels
 users.forEach((user, i) => {
     createUserCard(user, i);
+    getUserImage(user, i);
 });
 
 
-function getUserData(user) {
+function getUserImage(user, i) {
     const dataUrl = `https://api.twitch.tv/helix/users?login=${user}`;
     const userData = new XMLHttpRequest();
 
@@ -21,6 +22,7 @@ function getUserData(user) {
                 if (Boolean(dataObj)) { // If yes, collect data
                     if (dataObj.profile_image_url) {
                         // Image needs to be sent to user's card --> dataObj.profile_image_url
+                        document.querySelector(`#user-${i} img`).setAttribute("src", dataObj.profile_image_url);
                     }
                 } else { // Otherwise, return null
                     // Image needs to be super generic but not the 404 "image not found" one, needs to be USER not found
