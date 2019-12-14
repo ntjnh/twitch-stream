@@ -18,8 +18,8 @@ function getUserImage(user, i) {
                 const data = JSON.parse(userData.responseText);
                 const dataObj = data.data[0]; // I don't like this variable name
 
-                // Check if the user exists
-                if (Boolean(dataObj)) { // If yes, collect data
+                // Check if the user image exists
+                if (Boolean(dataObj)) {
                     if (dataObj.profile_image_url) {
                         // Image needs to be sent to user's card --> dataObj.profile_image_url
                         document.querySelector(`#user-${i} img`).setAttribute("src", dataObj.profile_image_url);
