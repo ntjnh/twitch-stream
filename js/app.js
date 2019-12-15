@@ -8,7 +8,7 @@ users.forEach((user, i) => {
     getViewerCount(user, i);
 });
 
-
+// Get each user's profile image
 function getUserImage(user, i) {
     const dataUrl = `https://api.twitch.tv/helix/users?login=${user}`;
     const userData = new XMLHttpRequest();
@@ -19,14 +19,16 @@ function getUserImage(user, i) {
                 const data = JSON.parse(userData.responseText);
                 const dataObj = data.data[0]; // I don't like this variable name
 
-                // Check if the user image exists
-                if (Boolean(dataObj)) {
-                    if (dataObj.profile_image_url) {
-                        document.querySelector(`#user-${i} img`).setAttribute("src", dataObj.profile_image_url);
-                    }
-                } else { // Otherwise, return null
-                    // Image needs to be super generic but not the 404 "image not found" one, needs to be USER not found
+                const imageElement = document.querySelector(`#user-${i} img`);
+                let imageUrl;
+
+                if (dataObj.profile_image_url) {
+                    imageUrl = dataObj.profile_image_url;
+                } else {
+                    imageUrl = "404.jpg";
                 }
+
+                imageElement.setAttribute("src", imageUrl);
             }
         }
     };
