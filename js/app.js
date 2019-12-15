@@ -48,7 +48,7 @@ function getViewerCount(user, i) {
                 const dataObj = data.data[0];
 
                 if (dataObj) {
-                    document.querySelector(`#user-${i} .status`).textContent = `${dataObj.viewer_count} viewers`;
+                    isOnline(i, dataObj);
                 }
             }
         }
@@ -61,6 +61,15 @@ function getViewerCount(user, i) {
 }
 
 filter();
+
+function isOnline(i, obj) {
+    const status = document.querySelector(`#user-${i} .status`);
+    status.textContent = `${obj.viewer_count} viewers`;
+    status.classList.add("status--online");
+
+    const icon = document.querySelector(`#user-${i} h3 .fa`);
+    icon.classList.add("fa-circle");
+}
 
 function createUserCard(user, i) {
     const userUrl = `https://www.twitch.tv/${user}`;
