@@ -5,6 +5,7 @@ const clientID = "ecek1qkikyqi8smqzpazytcjgok63h";
 users.forEach((user, i) => {
     createUserCard(user, i);
     getUserImage(user, i);
+    getViewerCount(user, i);
 });
 
 
@@ -21,7 +22,6 @@ function getUserImage(user, i) {
                 // Check if the user image exists
                 if (Boolean(dataObj)) {
                     if (dataObj.profile_image_url) {
-                        // Image needs to be sent to user's card --> dataObj.profile_image_url
                         document.querySelector(`#user-${i} img`).setAttribute("src", dataObj.profile_image_url);
                     }
                 } else { // Otherwise, return null
@@ -37,6 +37,28 @@ function getUserImage(user, i) {
     userData.send();
 }
 
+function getViewerCount(user, i) {
+    const dataUrl = `https://api.twitch.tv/helix/streams?user_login=${user}`;
+    const streamData = new XMLHttpRequest();
+
+    streamData.onreadystatechange = function() {
+        if (streamData.readyState === 4) {
+            if (streamData.status === 200) {
+                const data = JSON.parse(streamData.responseText);
+                const dataObj = data.data[0];
+
+                if (dataObj) {
+                    document.querySelector(`#user-${i} .status`).textContent = `${dataObj.viewer_count} viewers`;
+                }
+            }
+        }
+    };
+
+    streamData.open("GET", dataUrl);
+    streamData.setRequestHeader("Content-Type", "applicaion/json; charset=UTF-8");
+    streamData.setRequestHeader("Client-ID", clientID);
+    streamData.send();
+}
 
 filter();
 
