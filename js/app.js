@@ -89,7 +89,7 @@ function createUserCard(user, i) {
 
     const card = document.createElement("div");
     card.setAttribute("id", `user-${i}`);
-    card.classList.add("channel-card", "col-6", "col-sm-4", "col-md-3");
+    card.classList.add("stream", "col-6", "col-sm-4", "col-md-3");
 
     const pic = document.createElement("img");
     pic.classList.add("img-fluid");
