@@ -1,4 +1,4 @@
-const users = ["shroud", "OgamingSC2", "cretetion", "syndicate",  "ninja", "shlorox", "zryiedrokmijn", "amaz", "RobotCaleb", "elajjaz", "lirik", "tsm_dyrus", "riotgames", "silvername"];
+const users = ["shroud", "OgamingSC2", "cretetion", "syndicate",  "ninja", "shlorox", "amaz", "RobotCaleb", "elajjaz", "lirik", "tsm_dyrus", "riotgames", "silvername"];
 const clientID = "ecek1qkikyqi8smqzpazytcjgok63h";
 
 // Loop through the channels
