@@ -73,7 +73,7 @@ function isOnline(i, obj) {
     icon.classList.add("fa-circle");
 }
 
-function isOffline(i, obj) {
+function isOffline(i) {
     const status = document.querySelector(`#user-${i} .status`);
     status.innerHTML = "<em>Offline</em>";
     status.classList.add("status--offline");
