@@ -49,6 +49,8 @@ function getViewerCount(user, i) {
 
                 if (dataObj) {
                     isOnline(i, dataObj);
+                } else {
+                    isOffline(i, dataObj);
                 }
             }
         }
@@ -69,6 +71,15 @@ function isOnline(i, obj) {
 
     const icon = document.querySelector(`#user-${i} h3 .fa`);
     icon.classList.add("fa-circle");
+}
+
+function isOffline(i, obj) {
+    const status = document.querySelector(`#user-${i} .status`);
+    status.innerHTML = "<em>Offline</em>";
+    status.classList.add("status--offline");
+
+    const icon = document.querySelector(`#user-${i} h3 .fa`);
+    icon.classList.add("fa-circle-o");
 }
 
 function createUserCard(user, i) {
@@ -97,12 +108,11 @@ function createUserCard(user, i) {
     streamsDiv.appendChild(card);
 
     const statusIcon = document.createElement("i");
-    statusIcon.classList.add("fa", "fa-circle-o");
+    statusIcon.classList.add("fa");
     name.appendChild(statusIcon);
 
     const streamStatus = document.createElement("p");
-    streamStatus.classList.add("status", "status--offline");
-    streamStatus.innerHTML = "<em>Offline</em>"; 
+    streamStatus.classList.add("status");
     card.appendChild(streamStatus);
 }
 
