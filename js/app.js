@@ -67,6 +67,9 @@ function getViewerCount(user, i) {
 filter();
 
 function isOnline(i, obj) {
+    const card = document.getElementById(`user-${i}`);
+    card.classList.add("online");
+
     const status = document.querySelector(`#user-${i} .status`);
     status.textContent = `${obj.viewer_count} viewers`;
     status.classList.add("status--online");
@@ -76,6 +79,9 @@ function isOnline(i, obj) {
 }
 
 function isOffline(i) {
+    const card = document.getElementById(`user-${i}`);
+    card.classList.add("offline");
+
     const status = document.querySelector(`#user-${i} .status`);
     status.innerHTML = "<em>Offline</em>";
     status.classList.add("status--offline");
