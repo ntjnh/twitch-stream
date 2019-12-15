@@ -91,7 +91,6 @@ function createUserCard(user, i) {
 
     const pic = document.createElement("img");
     pic.classList.add("img-fluid");
-    pic.setAttribute("src", "404.jpg");
     card.appendChild(pic);
 
     const name = document.createElement("h3");
