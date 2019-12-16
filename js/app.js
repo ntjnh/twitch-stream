@@ -106,6 +106,7 @@ function createUserCard(user, i) {
     card.appendChild(name);
 
     const link = document.createElement("a");
+    link.setAttribute("class", "stream__link");
     link.setAttribute("href", userUrl);
     link.setAttribute("target", "_blank");
     link.textContent = user;
