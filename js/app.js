@@ -1,5 +1,9 @@
 const users = ["ESL_CSGO", "OgamingSC2", "cretetion", "RocketLeague",  "ninja", "CapcomFighters", "DrDisrespect", "Fortnite", "GRONKH", "lirik", "thegameawards", "riotgames", "silvername"];
 const clientID = "ecek1qkikyqi8smqzpazytcjgok63h";
+const headers = new Headers({
+    "Content-Type": "application/json; charset=UTF-8",
+    "Client-ID": clientID
+});
 
 // Loop through the channels
 users.forEach((user, i) => {
@@ -12,10 +16,7 @@ function getUserImage(user, i) {
     const dataUrl = `https://api.twitch.tv/helix/users?login=${user}`;
 
     fetch(dataUrl, {
-        headers: new Headers({
-            "Content-Type": "application/json; charset=UTF-8",
-            "Client-ID": clientID
-        })
+        headers: headers
     }).then(data => {
         return data.json();
     }).then(stream => {
@@ -30,10 +31,7 @@ function getViewerCount(user, i) {
     const dataUrl = `https://api.twitch.tv/helix/streams?user_login=${user}`;
 
     fetch(dataUrl, {
-        headers: new Headers({
-            "Content-Type": "application/json; charset=UTF-8",
-            "Client-ID": clientID
-        })
+        headers: headers
     }).then(data => {
         return data.json();
     }).then(stream => {
