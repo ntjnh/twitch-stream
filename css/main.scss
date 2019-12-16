@@ -35,24 +35,24 @@ a {
     text-align: right;
 }
 
-.all-button {
+.btn {
     &, &:hover {
+        color: $white;
+    }
+
+    &--all,
+    &--all:hover {
         background-color: $blue;
-        color: $white;
     }
-}
 
-.online-button {
-    &, &:hover {
+    &--online,
+    &--online:hover {
         background-color: $green;
-        color: $white;
     }
-}
 
-.offline-button {
-    &, &:hover {
+    &--offline,
+    &--offline:hover {
         background-color: $red;
-        color: $white;
     }
 }
 
