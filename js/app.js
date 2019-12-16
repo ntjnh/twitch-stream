@@ -75,7 +75,7 @@ function isOnline(i, obj) {
     status.classList.add("status--online");
 
     const icon = document.querySelector(`#user-${i} h3 .fa`);
-    icon.classList.add("fa-circle");
+    icon.classList.add("status--online", "fa-circle");
 }
 
 function isOffline(i) {
@@ -87,7 +87,7 @@ function isOffline(i) {
     status.classList.add("status--offline");
 
     const icon = document.querySelector(`#user-${i} h3 .fa`);
-    icon.classList.add("fa-circle-o");
+    icon.classList.add("status--offline", "fa-circle-o");
 }
 
 function createUserCard(user, i) {
@@ -115,7 +115,7 @@ function createUserCard(user, i) {
     streamsDiv.appendChild(card);
 
     const statusIcon = document.createElement("i");
-    statusIcon.classList.add("fa");
+    statusIcon.classList.add("status-icon", "fa");
     name.appendChild(statusIcon);
 
     const streamStatus = document.createElement("p");
