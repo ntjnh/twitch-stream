@@ -50,9 +50,9 @@ function getViewerCount(user, i) {
                 const dataObj = data.data[0];
 
                 if (dataObj) {
-                    isOnline(i, dataObj);
+                    setStatus("online", i, dataObj);
                 } else {
-                    isOffline(i, dataObj);
+                    setStatus("offline", i, dataObj);
                 }
             }
         }
@@ -66,28 +66,17 @@ function getViewerCount(user, i) {
 
 filter();
 
-function isOnline(i, obj) {
+function setStatus(status, i, obj) {
     const card = document.getElementById(`user-${i}`);
-    card.classList.add("online");
+    card.classList.add(status);
 
-    const status = document.querySelector(`#user-${i} .status`);
-    status.textContent = `${obj.viewer_count} viewers`;
-    status.classList.add("status--online");
+    const el = document.querySelector(`#user-${i} .status`);
+    if (status === "online") el.textContent = `${obj.viewer_count} viewers`;
+    else if (status === "offline") el.innerHTML = "<em>Offline</em>";
+    el.classList.add(`status--${status}`);
 
     const icon = document.querySelector(`#user-${i} h3 .fa`);
-    icon.classList.add("status--online", "fa-circle");
-}
-
-function isOffline(i) {
-    const card = document.getElementById(`user-${i}`);
-    card.classList.add("offline");
-
-    const status = document.querySelector(`#user-${i} .status`);
-    status.innerHTML = "<em>Offline</em>";
-    status.classList.add("status--offline");
-
-    const icon = document.querySelector(`#user-${i} h3 .fa`);
-    icon.classList.add("status--offline", "fa-circle-o");
+    icon.classList.add(`status--${status}`, status === "online" ? "fa-circle" : "fa-circle-o");
 }
 
 function createCard(user, i) {
