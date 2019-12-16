@@ -3,7 +3,7 @@ const clientID = "ecek1qkikyqi8smqzpazytcjgok63h";
 
 // Loop through the channels
 users.forEach((user, i) => {
-    createUserCard(user, i);
+    createCard(user, i);
     getUserImage(user, i);
     getViewerCount(user, i);
 });
@@ -90,7 +90,7 @@ function isOffline(i) {
     icon.classList.add("status--offline", "fa-circle-o");
 }
 
-function createUserCard(user, i) {
+function createCard(user, i) {
     const userUrl = `https://www.twitch.tv/${user}`;
 
     const card = document.createElement("div");
