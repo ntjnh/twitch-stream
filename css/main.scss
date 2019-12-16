@@ -5,21 +5,6 @@ body {
     font-family: $font;
 }
 
-a {
-    &,
-    &:focus,
-    &:hover,
-    &:visited {
-        color: $blue;
-    }
-
-    &:focus,
-    &:hover,
-    &:visited {
-        text-decoration: none;
-    }
-}
-
 .jumbotron {
     background-color:$blue;
     background-image: url(https://c1.staticflickr.com/3/2883/11044278476_30b114e38e_b.jpg);
@@ -58,6 +43,16 @@ a {
 
 .stream {
     margin-bottom: 20px;
+
+    &__link {
+        color: $blue;
+        text-decoration: none;
+
+        &:hover {
+            color: $black;
+            text-decoration: none;
+        }
+    }
 }
 
 .status-icon {
