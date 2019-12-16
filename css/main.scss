@@ -60,15 +60,15 @@ a {
     margin-bottom: 20px;
 }
 
-.fa-circle {
-    color: $green-2;
+.status-icon {
+    font-size: 14px;
+    vertical-align: top;
 
-    &, &-o {
-        font-size: 14px;
-        vertical-align: top;
+    &--online {
+        color: $green-2;
     }
 
-    &-o {
+    &-offline {
         color: $grey;
     }
 }
