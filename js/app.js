@@ -8,35 +8,22 @@ users.forEach((user, i) => {
     getViewerCount(user, i);
 });
 
-// Get each user's profile image
 function getUserImage(user, i) {
     const dataUrl = `https://api.twitch.tv/helix/users?login=${user}`;
-    const userData = new XMLHttpRequest();
 
-    userData.onreadystatechange = function() {
-        if (userData.readyState === 4) {
-            if (userData.status === 200) {
-                const data = JSON.parse(userData.responseText);
-                const dataObj = data.data[0]; // I don't like this variable name
-
-                const imageElement = document.querySelector(`#user-${i} img`);
-                let imageUrl;
-
-                if (dataObj.profile_image_url) {
-                    imageUrl = dataObj.profile_image_url;
-                } else {
-                    imageUrl = "404.jpg";
-                }
-
-                imageElement.setAttribute("src", imageUrl);
-            }
-        }
-    };
-
-    userData.open("GET", dataUrl);
-    userData.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
-    userData.setRequestHeader("Client-ID", clientID);
-    userData.send();
+    fetch(dataUrl, {
+        headers: new Headers({
+            "Content-Type": "application/json; charset=UTF-8",
+            "Client-ID": clientID
+        })
+    }).then(data => {
+        return data.json();
+    }).then(stream => {
+        const imageElement = document.querySelector(`#user-${i} img`);
+        const userImage = stream.data[0].profile_image_url;
+        let imageUrl = userImage ? userImage : "404.jpg";
+        imageElement.setAttribute("src", imageUrl);
+    });
 }
 
 function getViewerCount(user, i) {
