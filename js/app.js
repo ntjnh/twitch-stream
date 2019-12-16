@@ -28,27 +28,18 @@ function getUserImage(user, i) {
 
 function getViewerCount(user, i) {
     const dataUrl = `https://api.twitch.tv/helix/streams?user_login=${user}`;
-    const streamData = new XMLHttpRequest();
 
-    streamData.onreadystatechange = function() {
-        if (streamData.readyState === 4) {
-            if (streamData.status === 200) {
-                const data = JSON.parse(streamData.responseText);
-                const dataObj = data.data[0];
-
-                if (dataObj) {
-                    setStatus("online", i, dataObj);
-                } else {
-                    setStatus("offline", i, dataObj);
-                }
-            }
-        }
-    };
-
-    streamData.open("GET", dataUrl);
-    streamData.setRequestHeader("Content-Type", "applicaion/json; charset=UTF-8");
-    streamData.setRequestHeader("Client-ID", clientID);
-    streamData.send();
+    fetch(dataUrl, {
+        headers: new Headers({
+            "Content-Type": "application/json; charset=UTF-8",
+            "Client-ID": clientID
+        })
+    }).then(data => {
+        return data.json();
+    }).then(stream => {
+        const streamData = stream.data[0];
+        streamData ? setStatus("online", i, streamData) : setStatus("offline", i, streamData);
+    });
 }
 
 filter();
