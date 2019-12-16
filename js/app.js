@@ -71,8 +71,11 @@ function setStatus(status, i, obj) {
     card.classList.add(status);
 
     const el = document.querySelector(`#user-${i} .status`);
-    if (status === "online") el.textContent = `${obj.viewer_count} viewers`;
-    else if (status === "offline") el.innerHTML = "<em>Offline</em>";
+    if (status === "online") {
+        el.textContent = `${obj.viewer_count} viewers`;
+    } else {
+        el.innerHTML = "<em>Offline</em>";
+    }
     el.classList.add(`status--${status}`);
 
     const icon = document.querySelector(`#user-${i} h3 .fa`);
