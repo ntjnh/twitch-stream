@@ -38,7 +38,7 @@ function getViewerCount(user, i) {
         return data.json();
     }).then(stream => {
         const streamData = stream.data[0];
-        streamData ? setStatus("online", i, streamData) : setStatus("offline", i, streamData);
+        setStatus(streamData ? "online" : "offline", i, streamData);
     });
 }
 
